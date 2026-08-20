@@ -1,0 +1,175 @@
+{
+  "hotels": [
+    {
+      "hotel_id": "wish_foz",
+      "name": "Wish Foz do Iguaçu",
+      "destination": "Foz do Iguaçu - PR",
+      "type": "RESORT",
+      "monthly_budget_brl": 35000.00,
+      "target_roas": 9.0,
+      "max_cpa_brl": 180.00,
+      "min_roas_hard_stop": 4.5,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3331",
+        "meta_ad_account_id": "act_1010101"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.20, "max_pct": 0.40 },
+        "google_pmax": { "min_pct": 0.25, "max_pct": 0.50 },
+        "meta_ads": { "min_pct": 0.15, "max_pct": 0.35 }
+      }
+    },
+    {
+      "hotel_id": "wish_serrano",
+      "name": "Wish Serrano Gramado",
+      "destination": "Gramado - RS",
+      "type": "RESORT",
+      "monthly_budget_brl": 40000.00,
+      "target_roas": 10.0,
+      "max_cpa_brl": 190.00,
+      "min_roas_hard_stop": 5.0,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3332",
+        "meta_ad_account_id": "act_1010102"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.20, "max_pct": 0.40 },
+        "google_pmax": { "min_pct": 0.25, "max_pct": 0.50 },
+        "meta_ads": { "min_pct": 0.15, "max_pct": 0.35 }
+      }
+    },
+    {
+      "hotel_id": "wish_natal",
+      "name": "Wish Natal",
+      "destination": "Natal - RN",
+      "type": "RESORT",
+      "monthly_budget_brl": 32000.00,
+      "target_roas": 8.5,
+      "max_cpa_brl": 170.00,
+      "min_roas_hard_stop": 4.0,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3333",
+        "meta_ad_account_id": "act_1010103"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.20, "max_pct": 0.40 },
+        "google_pmax": { "min_pct": 0.25, "max_pct": 0.50 },
+        "meta_ads": { "min_pct": 0.15, "max_pct": 0.35 }
+      }
+    },
+    {
+      "hotel_id": "wish_bahia",
+      "name": "Wish Hotel da Bahia",
+      "destination": "Salvador - BA",
+      "type": "URBAN_HOTEL",
+      "monthly_budget_brl": 25000.00,
+      "target_roas": 8.0,
+      "max_cpa_brl": 150.00,
+      "min_roas_hard_stop": 4.0,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3334",
+        "meta_ad_account_id": "act_1010104"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.25, "max_pct": 0.45 },
+        "google_pmax": { "min_pct": 0.20, "max_pct": 0.40 },
+        "meta_ads": { "min_pct": 0.15, "max_pct": 0.30 }
+      }
+    },
+    {
+      "hotel_id": "prodigy_santos_dumont",
+      "name": "Prodigy Santos Dumont",
+      "destination": "Rio de Janeiro - RJ",
+      "type": "URBAN_AIRPORT",
+      "monthly_budget_brl": 28000.00,
+      "target_roas": 9.5,
+      "max_cpa_brl": 140.00,
+      "min_roas_hard_stop": 4.5,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3335",
+        "meta_ad_account_id": "act_1010105"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.30, "max_pct": 0.55 },
+        "google_pmax": { "min_pct": 0.15, "max_pct": 0.35 },
+        "meta_ads": { "min_pct": 0.10, "max_pct": 0.25 }
+      }
+    },
+    {
+      "hotel_id": "prodigy_gramado",
+      "name": "Prodigy Gramado",
+      "destination": "Gramado - RS",
+      "type": "LEISURE_HOTEL",
+      "monthly_budget_brl": 26000.00,
+      "target_roas": 9.0,
+      "max_cpa_brl": 160.00,
+      "min_roas_hard_stop": 4.5,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3336",
+        "meta_ad_account_id": "act_1010106"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.25, "max_pct": 0.45 },
+        "google_pmax": { "min_pct": 0.20, "max_pct": 0.45 },
+        "meta_ads": { "min_pct": 0.15, "max_pct": 0.30 }
+      }
+    },
+    {
+      "hotel_id": "linx_galeao",
+      "name": "Linx Galeão",
+      "destination": "Rio de Janeiro - RJ",
+      "type": "AIRPORT_HOTEL",
+      "monthly_budget_brl": 20000.00,
+      "target_roas": 8.0,
+      "max_cpa_brl": 130.00,
+      "min_roas_hard_stop": 3.5,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3337",
+        "meta_ad_account_id": "act_1010107"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.35, "max_pct": 0.60 },
+        "google_pmax": { "min_pct": 0.10, "max_pct": 0.30 },
+        "meta_ads": { "min_pct": 0.05, "max_pct": 0.20 }
+      }
+    },
+    {
+      "hotel_id": "linx_confins",
+      "name": "Linx Confins",
+      "destination": "Confins / Belo Horizonte - MG",
+      "type": "AIRPORT_HOTEL",
+      "monthly_budget_brl": 18000.00,
+      "target_roas": 7.5,
+      "max_cpa_brl": 125.00,
+      "min_roas_hard_stop": 3.5,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3338",
+        "meta_ad_account_id": "act_1010108"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.35, "max_pct": 0.60 },
+        "google_pmax": { "min_pct": 0.10, "max_pct": 0.30 },
+        "meta_ads": { "min_pct": 0.05, "max_pct": 0.20 }
+      }
+    },
+    {
+      "hotel_id": "marupiara_porto",
+      "name": "Marupiara Resort",
+      "destination": "Porto de Galinhas - PE",
+      "type": "RESORT",
+      "monthly_budget_brl": 36000.00,
+      "target_roas": 9.5,
+      "max_cpa_brl": 175.00,
+      "min_roas_hard_stop": 4.5,
+      "accounts": {
+        "google_ads_customer_id": "111-222-3339",
+        "meta_ad_account_id": "act_1010109"
+      },
+      "channel_limits": {
+        "google_search_brand": { "min_pct": 0.20, "max_pct": 0.40 },
+        "google_pmax": { "min_pct": 0.25, "max_pct": 0.50 },
+        "meta_ads": { "min_pct": 0.15, "max_pct": 0.35 }
+      }
+    }
+  ]
+}

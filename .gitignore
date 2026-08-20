@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Logs
+logs/
+*.log
+
+# Environment variables & Credentials
+.env
+.env.local
+google-ads.yaml
+client_secrets.json
+
+# IDE & OS
+.DS_Store
+.vscode/
+.idea/
