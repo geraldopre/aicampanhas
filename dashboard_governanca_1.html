@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Governança do Agente · Grupo Wish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E24; --panel:#111634; --panel-2:#161C42; --line:#242C5C;
+    --ink:#EEF1FA; --ink-dim:#9AA3C4; --ink-faint:#5C6699;
+    --brand:#6C4BF6; --brand-2:#9B85FF; --azul:#2E7CF6; --ciano:#36C5D0;
+    --verde:#34C77B; --amarelo:#F5C544; --vermelho:#E5556E; --laranja:#E8894A;
+    --radius:14px; --gap:18px;
+    --mono:'DM Mono',ui-monospace,'SF Mono',Menlo,monospace;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;
+    background-image:radial-gradient(1200px 600px at 85% -10%,rgba(108,75,246,.14),transparent 60%),radial-gradient(900px 500px at 5% 110%,rgba(52,199,123,.08),transparent 55%);
+    min-height:100vh;-webkit-font-smoothing:antialiased;font-feature-settings:'tnum' 1}
+  .wrap{max-width:1360px;margin:0 auto;padding:28px 28px 60px}
+
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--brand-2);margin-bottom:8px}
+  h1{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+  h1 .accent{color:var(--brand-2)}
+  .sub{color:var(--ink-dim);font-size:13.5px;margin-top:7px}
+  .status-pill{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;
+    background:rgba(52,199,123,.10);border:1px solid rgba(52,199,123,.35);color:var(--verde);
+    border-radius:999px;padding:9px 16px;white-space:nowrap}
+  .status-pill .beat{width:8px;height:8px;border-radius:50%;background:var(--verde);
+    box-shadow:0 0 0 0 rgba(52,199,123,.6);animation:beat 2s infinite}
+  @keyframes beat{0%{box-shadow:0 0 0 0 rgba(52,199,123,.5)}70%{box-shadow:0 0 0 7px rgba(52,199,123,0)}100%{box-shadow:0 0 0 0 rgba(52,199,123,0)}}
+
+  /* run banner */
+  .runbar{display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:15px 20px;margin-bottom:var(--gap)}
+  .runbar .item{display:flex;flex-direction:column;gap:2px}
+  .runbar .r-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .runbar .r-val{font-size:15px;font-weight:700}
+  .runbar .r-val small{font-weight:500;color:var(--ink-dim);font-size:12px}
+  .runbar .sep{width:1px;height:34px;background:var(--line)}
+  .mode-tag{margin-left:auto;font-family:var(--mono);font-size:11px;padding:6px 13px;border-radius:8px;
+    background:rgba(245,197,68,.12);border:1px solid rgba(245,197,68,.4);color:var(--amarelo)}
+  .mode-tag.auto{background:rgba(52,199,123,.12);border-color:rgba(52,199,123,.4);color:var(--verde)}
+
+  /* summary cards */
+  .summary{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--gap);margin-bottom:var(--gap)}
+  .scard{background:linear-gradient(160deg,var(--panel),var(--panel-2));border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 18px;position:relative;overflow:hidden}
+  .scard::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,var(--brand))}
+  .scard .s-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:9px;min-height:24px;line-height:1.3}
+  .scard .s-val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1}
+  .scard .s-foot{margin-top:8px;font-size:11px;color:var(--ink-dim)}
+
+  .cols{display:grid;grid-template-columns:1fr 340px;gap:var(--gap);align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:var(--gap)}
+  .panel h2{font-size:14.5px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:9px;justify-content:space-between}
+  .panel h2 .lead{display:flex;align-items:center;gap:9px}
+  .panel h2 .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);border:1px solid var(--line);padding:2px 7px;border-radius:5px;font-weight:400}
+  .panel .p-sub{font-size:11.5px;color:var(--ink-faint);margin-bottom:15px}
+
+  /* filter chips */
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chip{font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--ink-dim);
+    background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:6px 11px;cursor:pointer;transition:.15s}
+  .chip:hover{color:var(--ink)}
+  .chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .chip:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px}
+
+  /* adjustment log */
+  .adj{border:1px solid var(--line);border-radius:12px;margin-bottom:11px;overflow:hidden;transition:.15s}
+  .adj:hover{border-color:#39447f}
+  .adj-head{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;
+    padding:13px 16px;cursor:pointer}
+  .adj-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  .ico-up{background:rgba(52,199,123,.14);color:var(--verde)}
+  .ico-down{background:rgba(229,85,110,.14);color:var(--vermelho)}
+  .ico-shield{background:rgba(46,124,246,.14);color:var(--azul)}
+  .ico-pause{background:rgba(245,197,68,.14);color:var(--amarelo)}
+  .adj-main .a-t{font-size:13.5px;font-weight:600;margin-bottom:2px}
+  .adj-main .a-s{font-size:11.5px;color:var(--ink-dim)}
+  .adj-main .a-s b{color:var(--ink)}
+  .adj-delta{font-family:var(--mono);font-size:14px;font-weight:500;text-align:right;white-space:nowrap}
+  .adj-delta small{display:block;font-size:10px;color:var(--ink-faint);margin-top:2px}
+  .st-badge{font-family:var(--mono);font-size:10px;padding:4px 9px;border-radius:6px;white-space:nowrap}
+  .st-auto{background:rgba(52,199,123,.13);color:var(--verde)}
+  .st-wait{background:rgba(245,197,68,.13);color:var(--amarelo)}
+  .st-block{background:rgba(229,85,110,.13);color:var(--vermelho)}
+  .adj-body{max-height:0;overflow:hidden;transition:max-height .3s ease;border-top:0 solid var(--line)}
+  .adj.open .adj-body{max-height:300px;border-top:1px solid var(--line)}
+  .adj-body-in{padding:14px 16px;background:var(--bg)}
+  .rationale{font-size:12px;color:var(--ink-dim);line-height:1.6;margin-bottom:12px}
+  .rationale b{color:var(--ink)}
+  .rules-line{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .rules-line .rl-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-right:2px}
+  .rule-chk{font-family:var(--mono);font-size:10.5px;padding:4px 9px;border-radius:6px;
+    background:rgba(52,199,123,.10);color:var(--verde);border:1px solid rgba(52,199,123,.25)}
+  .rule-chk.warn{background:rgba(245,197,68,.10);color:var(--amarelo);border-color:rgba(245,197,68,.25)}
+
+  /* rules sidebar */
+  .rule-item{padding:13px 0;border-bottom:1px solid rgba(36,44,92,.6)}
+  .rule-item:last-child{border-bottom:0}
+  .rule-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}
+  .rule-name{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .rule-name .dot{width:8px;height:8px;border-radius:50%}
+  .rule-count{font-family:var(--mono);font-size:11px;color:var(--ink-dim)}
+  .rule-bar{height:6px;background:var(--bg);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .rule-bar > i{display:block;height:100%;border-radius:99px;transition:width .8s cubic-bezier(.2,.7,.2,1)}
+  .rule-desc{font-size:10.5px;color:var(--ink-faint);margin-top:6px;line-height:1.5}
+
+  .approve-card{background:var(--panel-2);border:1px solid rgba(245,197,68,.3);border-radius:12px;padding:14px 16px;margin-bottom:11px}
+  .approve-card .ac-t{font-size:12.5px;font-weight:600;margin-bottom:4px}
+  .approve-card .ac-d{font-size:11px;color:var(--ink-dim);margin-bottom:11px}
+  .ac-actions{display:flex;gap:8px}
+  .btn{flex:1;font-family:var(--sans);font-size:12px;font-weight:600;border:0;border-radius:8px;padding:8px;cursor:pointer;transition:.15s}
+  .btn-ok{background:var(--verde);color:#05210f}
+  .btn-ok:hover{filter:brightness(1.1)}
+  .btn-no{background:transparent;border:1px solid var(--line);color:var(--ink-dim)}
+  .btn-no:hover{color:var(--ink);border-color:var(--ink-faint)}
+  .btn:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px}
+
+  footer{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+
+  @media (max-width:980px){
+    .summary{grid-template-columns:repeat(2,1fr)}
+    .cols{grid-template-columns:1fr}
+    .adj-head{grid-template-columns:auto 1fr auto;gap:10px}
+    .adj-delta{grid-column:2;text-align:left}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="eyebrow">Grupo Wish · Agente Gerente de Mídia</div>
+      <h1>Governança do <span class="accent">Agente</span></h1>
+      <div class="sub">O que o agente ajustou nas contas de anúncio e sob quais regras — trilha de auditoria</div>
+    </div>
+    <div class="status-pill"><span class="beat"></span>Agente ativo · conectado a Google Ads + Meta</div>
+  </header>
+
+  <!-- RUN INFO -->
+  <div class="runbar">
+    <div class="item"><span class="r-lbl">Último ciclo</span><span class="r-val">Seg, 17 ago · 06:00</span></div>
+    <div class="sep"></div>
+    <div class="item"><span class="r-lbl">Contas conectadas</span><span class="r-val">2 <small>Google MCC + Meta BM</small></span></div>
+    <div class="sep"></div>
+    <div class="item"><span class="r-lbl">Hotéis sob gestão</span><span class="r-val">9</span></div>
+    <div class="sep"></div>
+    <div class="item"><span class="r-lbl">Próximo ciclo</span><span class="r-val">Seg, 24 ago · 06:00</span></div>
+    <div class="mode-tag" id="modeTag">Modo: Homologação (Dry-Run) · aprovação humana obrigatória</div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary" id="summary"></div>
+
+  <div class="cols">
+    <!-- LEFT: adjustment log -->
+    <div>
+      <div class="panel">
+        <h2>
+          <span class="lead">Ajustes do ciclo <span class="tag">17 ago 2026</span></span>
+        </h2>
+        <div class="p-sub">Cada ajuste traz o racional em dados e as regras verificadas · clique para expandir</div>
+        <div class="chips" id="chips" style="margin-bottom:16px">
+          <button class="chip on" data-f="all">Todos</button>
+          <button class="chip" data-f="google">Google</button>
+          <button class="chip" data-f="meta">Meta</button>
+          <button class="chip" data-f="wait">Aguardando aprovação</button>
+          <button class="chip" data-f="block">Bloqueado por regra</button>
+        </div>
+        <div id="adjList"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: rules + approvals -->
+    <div>
+      <div class="panel">
+        <h2><span class="lead">Regras do projeto <span class="tag">guardrails</span></span></h2>
+        <div class="p-sub">Verificação de conformidade neste ciclo</div>
+        <div id="rulesList"></div>
+      </div>
+
+      <div class="panel">
+        <h2><span class="lead">Fila de aprovação</span></h2>
+        <div class="p-sub">Ações que aguardam seu aval antes de ir ao ar</div>
+        <div id="approveList"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Trilha de auditoria · Agente Gerente de Mídia de Performance · Grupo Wish</span>
+    <span>Dados de exemplo — estrutura pronta p/ log real das contas conectadas</span>
+  </footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   CAMADA DE DADOS — log de ações do agente (exemplo).
+   Ao conectar de verdade, este objeto vem do log das contas de anúncio.
+   ═══════════════════════════════════════════════════════════════════ */
+const RULES = [
+  {id:"var20",  name:"Variação máx. ±20% / ciclo", color:"#2E7CF6",
+   desc:"Protege o aprendizado do Smart Bidding: nenhum orçamento diário muda mais de 20% por ciclo.",
+   applied:11, blocked:1},
+  {id:"marca",  name:"Defesa da marca", color:"#34C77B",
+   desc:"Se a perda de impressão por orçamento na busca do nome do hotel passa de 10%, o agente reforça a verba.",
+   applied:3, blocked:0},
+  {id:"teto",   name:"Teto orçamentário mensal", color:"#F5C544",
+   desc:"A soma dos orçamentos diários recomendados nunca ultrapassa o limite aprovado por hotel.",
+   applied:9, blocked:1},
+  {id:"dados",  name:"Racional 100% em dados", color:"#9B85FF",
+   desc:"Toda recomendação carrega justificativa matemática explícita (ROAS, perda de impressão, CPA).",
+   applied:14, blocked:0},
+  {id:"humano", name:"Aprovação humana", color:"#E8894A",
+   desc:"Em modo homologação, nenhuma mutação vai ao ar sem aval do gestor.",
+   applied:14, blocked:0},
+];
+
+const ADJUSTMENTS = [
+  {id:1, channel:"google", hotel:"Marupiara", camp:"SEARCH-Marupiara-All-Inclusive",
+   type:"up", status:"auto", from:1503, to:1803, deltaPct:19.97,
+   rationale:"ROAS de <b>245,7x</b> muito acima da meta (9,5x) com <b>18% de perda de impressão por orçamento</b>. Realocação recomendada dentro do limite de ±20%.",
+   rules:["var20","dados","teto"]},
+  {id:2, channel:"google", hotel:"Wish Serrano", camp:"PMAX-Wish-Serrano-Prioridade",
+   type:"down", status:"wait", from:1738, to:1390, deltaPct:-20.0,
+   rationale:"ROAS de <b>1,3x</b> muito abaixo da meta (10,0x). Reduzir ao piso permitido (-20%) e realocar para a campanha de marca do hotel (39,6x).",
+   rules:["var20","dados"]},
+  {id:3, channel:"google", hotel:"Wish Serrano", camp:"HTL-Wish-Serrano-Niara",
+   type:"shield", status:"wait", from:722, to:866, deltaPct:19.9,
+   rationale:"<b>Defesa da marca acionada:</b> perda de impressão de <b>14%</b> na busca do nome do hotel (acima do gatilho de 10%). Reforço de verba para retomar share.",
+   rules:["marca","var20","dados"]},
+  {id:4, channel:"google", hotel:"Wish Natal", camp:"PMAX-Wish-Natal-Geo",
+   type:"down", status:"wait", from:2007, to:1606, deltaPct:-20.0,
+   rationale:"ROAS de <b>0,6x</b> — a pior eficiência do ciclo. Reduzir ao piso de -20%; candidata a pausa se não reagir em 2 ciclos.",
+   rules:["var20","dados","teto"]},
+  {id:5, channel:"meta", hotel:"Wish Natal", camp:"SETEMBRO ATÉ 30% OFF",
+   type:"up", status:"auto", from:529, to:635, deltaPct:20.0,
+   rationale:"Campanha promocional com <b>CTR de 1,08%</b> e melhor volume de interações do hotel no Meta. Escalar no teto de +20% na reta da oferta de setembro.",
+   rules:["var20","dados","teto"]},
+  {id:6, channel:"meta", hotel:"Prodigy Santos Dumont", camp:"FEIJOADA BRASILIDADES",
+   type:"up", status:"auto", from:171, to:205, deltaPct:19.9,
+   rationale:"<b>CTR de 3,98%</b> — o mais alto do Meta na rede, com 544 cliques. Reforço dentro do limite para capturar a demanda do evento.",
+   rules:["var20","dados"]},
+  {id:7, channel:"google", hotel:"Wish Foz do Iguaçu", camp:"PMAX-Wish-Foz",
+   type:"block", status:"block", from:2051, to:2600, deltaPct:26.8,
+   rationale:"Recomendação de +26,8% <b>bloqueada</b>: excede o limite de ±20% por ciclo. Ajuste travado no teto de +20% e enviado para revisão.",
+   rules:["var20"]},
+  {id:8, channel:"meta", hotel:"Wish Serrano", camp:"REMARKETING FEV-26",
+   type:"up", status:"auto", from:276, to:331, deltaPct:19.9,
+   rationale:"Remarketing com <b>ROAS de plataforma saudável</b> e base quente. Reforço para converter a intenção acumulada pós-Wish Week.",
+   rules:["var20","dados"]},
+];
+
+/* ── render ── */
+const BRL = n => "R$ "+Math.round(n).toLocaleString("pt-BR");
+const pctTxt = n => (n>0?"+":"")+n.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
+const ruleName = id => RULES.find(r=>r.id===id).name;
+let filter="all";
+
+function renderSummary(){
+  const total=ADJUSTMENTS.length;
+  const auto=ADJUSTMENTS.filter(a=>a.status==="auto").length;
+  const wait=ADJUSTMENTS.filter(a=>a.status==="wait").length;
+  const blocked=ADJUSTMENTS.filter(a=>a.status==="block").length;
+  const realoc=ADJUSTMENTS.filter(a=>a.status!=="block").reduce((s,a)=>s+Math.abs(a.to-a.from),0);
+  const cards=[
+    {lbl:"Ajustes no ciclo", val:total, accent:"var(--brand)", foot:"Google + Meta"},
+    {lbl:"Aplicados automático", val:auto, accent:"var(--verde)", foot:"dentro das regras"},
+    {lbl:"Aguardando aprovação", val:wait, accent:"var(--amarelo)", foot:"pendem do seu aval"},
+    {lbl:"Bloqueados por regra", val:blocked, accent:"var(--vermelho)", foot:"guardrail impediu"},
+    {lbl:"Verba realocada", val:BRL(realoc), accent:"var(--ciano)", foot:"movimentada no ciclo"},
+  ];
+  document.getElementById("summary").innerHTML=cards.map(c=>`
+    <div class="scard" style="--accent:${c.accent}">
+      <div class="s-lbl">${c.lbl}</div>
+      <div class="s-val">${c.val}</div>
+      <div class="s-foot">${c.foot}</div>
+    </div>`).join("");
+}
+
+function icoClass(t){return t==="up"?"ico-up":t==="down"?"ico-down":t==="shield"?"ico-shield":"ico-pause";}
+function icoChar(t){return t==="up"?"▲":t==="down"?"▼":t==="shield"?"🛡":"⛔";}
+function stBadge(s){return s==="auto"?['st-auto','Aplicado']:s==="wait"?['st-wait','Aguardando']:['st-block','Bloqueado'];}
+
+function renderAdj(){
+  let rows=ADJUSTMENTS.filter(a=>{
+    if(filter==="all")return true;
+    if(filter==="google"||filter==="meta")return a.channel===filter;
+    if(filter==="wait")return a.status==="wait";
+    if(filter==="block")return a.status==="block";
+  });
+  const el=document.getElementById("adjList");
+  if(!rows.length){el.innerHTML=`<div style="color:var(--ink-faint);font-size:12.5px;padding:20px;text-align:center">Nenhum ajuste neste filtro.</div>`;return;}
+  el.innerHTML=rows.map(a=>{
+    const [bc,bt]=stBadge(a.status);
+    const dColor=a.type==="down"?"var(--vermelho)":a.type==="shield"?"var(--azul)":a.type==="block"?"var(--ink-faint)":"var(--verde)";
+    return `<div class="adj" data-id="${a.id}">
+      <div class="adj-head">
+        <div class="adj-ico ${icoClass(a.type)}">${icoChar(a.type)}</div>
+        <div class="adj-main">
+          <div class="a-t">${a.camp}</div>
+          <div class="a-s"><b>${a.hotel}</b> · ${a.channel==="google"?"Google Ads":"Meta Ads"} · ${BRL(a.from)} → ${BRL(a.to)}/dia</div>
+        </div>
+        <div class="adj-delta" style="color:${dColor}">${pctTxt(a.deltaPct)}<small>orçamento/dia</small></div>
+        <span class="st-badge ${bc}">${bt}</span>
+      </div>
+      <div class="adj-body"><div class="adj-body-in">
+        <div class="rationale"><b>Racional:</b> ${a.rationale}</div>
+        <div class="rules-line"><span class="rl-lbl">Regras verificadas</span>
+          ${a.rules.map(r=>`<span class="rule-chk ${a.status==='block'&&r==='var20'?'warn':''}">✓ ${ruleName(r)}</span>`).join("")}
+        </div>
+      </div></div>
+    </div>`;
+  }).join("");
+  el.querySelectorAll(".adj-head").forEach(h=>h.addEventListener("click",()=>h.parentElement.classList.toggle("open")));
+}
+
+function renderRules(){
+  document.getElementById("rulesList").innerHTML=RULES.map(r=>{
+    const tot=r.applied+r.blocked;
+    const pct=tot?Math.round(r.applied/tot*100):100;
+    return `<div class="rule-item">
+      <div class="rule-top">
+        <div class="rule-name"><span class="dot" style="background:${r.color}"></span>${r.name}</div>
+        <div class="rule-count">${r.applied} ok${r.blocked?` · ${r.blocked} travou`:""}</div>
+      </div>
+      <div class="rule-bar"><i style="width:${pct}%;background:${r.color}"></i></div>
+      <div class="rule-desc">${r.desc}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderApprovals(){
+  const waiting=ADJUSTMENTS.filter(a=>a.status==="wait");
+  const el=document.getElementById("approveList");
+  if(!waiting.length){el.innerHTML=`<div style="color:var(--ink-faint);font-size:12px;padding:8px 0">Nada pendente. Tudo em dia. ✓</div>`;return;}
+  el.innerHTML=waiting.map(a=>`
+    <div class="approve-card" data-id="${a.id}">
+      <div class="ac-t">${a.camp}</div>
+      <div class="ac-d">${a.hotel} · ${BRL(a.from)} → ${BRL(a.to)}/dia (${pctTxt(a.deltaPct)})</div>
+      <div class="ac-actions">
+        <button class="btn btn-ok" onclick="decide(${a.id},true)">Aprovar</button>
+        <button class="btn btn-no" onclick="decide(${a.id},false)">Recusar</button>
+      </div>
+    </div>`).join("");
+}
+
+window.decide=function(id,ok){
+  const a=ADJUSTMENTS.find(x=>x.id===id);
+  a.status=ok?"auto":"block";
+  renderSummary();renderAdj();renderApprovals();
+};
+
+document.getElementById("chips").addEventListener("click",e=>{
+  const c=e.target.closest(".chip");if(!c)return;
+  document.querySelectorAll("#chips .chip").forEach(x=>x.classList.remove("on"));
+  c.classList.add("on");filter=c.dataset.f;renderAdj();
+});
+
+renderSummary();renderAdj();renderRules();renderApprovals();
+</script>
+</body>
+</html>
